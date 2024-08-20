@@ -24,13 +24,3 @@ docker-compose up -d
 # to use cli
 docker exec -it 8b3 arangosh
 ```
-
----
-
-# AQL Basics
-
-1. Query Document
-
-```aql
-db._query('RETURN DOCUMENT("users/624")')
-```
