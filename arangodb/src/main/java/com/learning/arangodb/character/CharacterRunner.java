@@ -39,6 +39,9 @@ public class CharacterRunner implements CommandLineRunner {
         Page<CharacterDomain> findALl =
                 characterRepository.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "name")));
         System.out.println(findALl.toString());
+
+        Iterable<CharacterDomain> queryBySurname = characterRepository.getWithSurname("Kubernetes");
+        System.out.println(queryBySurname.toString());
     }
 
     private Collection<CharacterDomain> createCharacters() {
