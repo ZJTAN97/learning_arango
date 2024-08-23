@@ -1,9 +1,7 @@
 package com.learning.arangodb.character;
 
 import com.arangodb.springframework.core.ArangoOperations;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
@@ -42,6 +40,13 @@ public class CharacterRunner implements CommandLineRunner {
 
         Iterable<CharacterDomain> queryBySurname = characterRepository.getWithSurname("Kubernetes");
         System.out.println(queryBySurname.toString());
+
+        System.out.println("[INFO] Find all characters with surname 'Kubernetes' which are older than 5");
+        Map<String, Object> bindVars = new HashMap<>();
+        bindVars.put("surname", "Kubernetes");
+        bindVars.put("@col", CharacterDomain.class);
+        Iterable<CharacterDomain> bindVarsQueryResult = characterRepository.getWithSurnameOlderThan(5, bindVars);
+        System.out.println(bindVarsQueryResult.toString());
     }
 
     private Collection<CharacterDomain> createCharacters() {

@@ -1,9 +1,11 @@
 package com.learning.arangodb.character;
 
+import com.arangodb.springframework.annotation.BindVars;
 import com.arangodb.springframework.annotation.Query;
 import com.arangodb.springframework.repository.ArangoRepository;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -33,4 +35,9 @@ public interface CharacterRepository extends ArangoRepository<CharacterDomain, S
         SORT c.age ASC RETURN c
      """)
     Iterable<CharacterDomain> getWithSurname(@Param("surname") String value);
+
+    @Query("""
+      FOR c IN @@col FILTER c.surname == @surname AND c.age > @age RETURN c
+    """)
+    Iterable<CharacterDomain> getWithSurnameOlderThan(@Param("age") int value, @BindVars Map<String, Object> bindVars);
 }
